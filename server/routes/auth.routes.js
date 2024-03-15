@@ -49,10 +49,10 @@ router.post('/signup', async (req, res) => {
         const user = await User.findOne({username})
         if(user) return res.status(400).json({error: "username already exists"})
 
-        const hashedPassword = await bcryptjs.hash(password, 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
 
         const boyPic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
-        const girlPic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
+        const girlPic = `https://avatar.iran.liara.run/public/girl?username=${username}`; 
 
         const newUser = new User({
             fullName,

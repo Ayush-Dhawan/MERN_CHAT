@@ -6,6 +6,7 @@ import Message from '../models/message.model.js';
 
 const router = express.Router();
 
+router.get("/:id", protectRoutev3 ,getMessages);
 router.post("/send/:id", protectRoutev3 ,sendMessage); ///protect route is a middle ware...the line means run send message after protecting the route ie performing auth
 
 export default router;
@@ -34,14 +35,37 @@ async function sendMessage(req, res){
             conversation.messages.push(newMessage._id);
         }
 
-        await conversation.save();
-        await newMessage.save();
+        //insert sockets
+
+        // await conversation.save(); //add them to the db
+        // await newMessage.save();
+
+        //faster as runs both saves in parallel
+        await Promise.all([conversation.save(), newMessage.save()]);
 
         res.status(201).json({message: "new message created"})
         
     } catch (error) {
         res.status(500).json({error: "interna server error"})
         console.log(error.message)
+    }
+}
+
+async function getMessages(req, res){
+    try {
+        const {id: userToChatWithID} = req.params;
+        const senderID = req.user._id;
+
+        const conversation = await Conversation.findOne({
+            participants: {$all: [senderID, userToChatWithID]}
+        }).populate("messages") //instead of just returning message ids it will return an object which will also contain the actual messages
+
+        if(!conversation) return res.status(201).json([]);
+
+        res.status(200).json(conversation?.messages)
+    } catch (error) {
+        res.status(500).json({error: "interna server error"})
+        console.log("in get messages controller",error.message)
     }
 }
 

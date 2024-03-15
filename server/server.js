@@ -2,6 +2,7 @@ import express from "express";
 import { config } from "dotenv";
 import authRoutes from './routes/auth.routes.js'
 import messageRoutes from './routes/message.routes.js'
+import userRoutes from './routes/user.routes.js'
 import dbconnect from "./db/dbconnect.js";
 import cookieParser from "cookie-parser";
 
@@ -21,6 +22,7 @@ app.get('/', (req, res)=>{
 
 app.use('/api/auth', authRoutes)
 app.use('/api/messages', messageRoutes)
+app.use('/api/users', userRoutes)
 
 app.listen(PORT, () =>{ 
     dbconnect();
