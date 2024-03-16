@@ -1,0 +1,19 @@
+.shadow-custom-md {
+    box-shadow: 0 0 10px rgba(90, 90, 93, 0.5);
+  }
+
+.custom-grid{
+    display: grid;
+    grid-template-columns: 5% 1fr;
+}
+
+.hidden {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for opacity and transform */
+  }
+
+  .sideBar{
+    transition: all 0.3s ease;
+  }
+

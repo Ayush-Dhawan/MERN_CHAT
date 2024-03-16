@@ -1,0 +1,8 @@
+.convo{
+    transition: all 0.2s ease-in-out;
+
+    &:hover{
+        background-color: rgb(122, 250, 173);
+        cursor: pointer;
+    }
+}
