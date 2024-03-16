@@ -3,10 +3,12 @@ import { FaHome, FaBell } from "react-icons/fa";
 import { PiChatsFill } from "react-icons/pi";
 import { MdGroups } from "react-icons/md";
 import { IoPersonAdd } from "react-icons/io5";
+import { RiLogoutBoxRFill } from "react-icons/ri";
 
 import './Home.css'
 import Conversation from '../ui/Conversation';
 import MessageContainer from '../ui/MessageContainer';
+import useLogout from '../hooks/useLogout';
 
 export default function Home() {
   const [hideSideBar, setHideSideBar] = useState<Boolean>(true);
@@ -71,6 +73,7 @@ function Conversations(){
 
 function SideNav({setHideSideBar, hideSideBar}: {setHideSideBar: Function, hideSideBar: Boolean}){
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const {logout} = useLogout();
 
   useEffect(() => {
     const handleResize = () => {
@@ -80,6 +83,8 @@ function SideNav({setHideSideBar, hideSideBar}: {setHideSideBar: Function, hideS
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+
   return(
     <div className='h-full flex flex-col gap-6 items-center justify-evenly bg-slate-800 text-[#7AFAAD]'>
       <FaHome size={'2rem'} className='cursor-pointer' />
@@ -92,6 +97,7 @@ function SideNav({setHideSideBar, hideSideBar}: {setHideSideBar: Function, hideS
       )}
       <MdGroups size={'2rem'} className='cursor-pointer' />
       <FaBell size={'2rem'} className='cursor-pointer' />
+      <RiLogoutBoxRFill size={'2rem'} className='cursor-pointer' onClick={logout} />
     </div>
   )
 }
