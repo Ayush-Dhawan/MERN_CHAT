@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {Toaster} from 'react-hot-toast'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -19,6 +20,21 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
         </Routes>
       </BrowserRouter>
+      <Toaster position="top-center" gutter = {10} containerStyle={{ margin: "5px"}} toastOptions = {{
+        success: {
+          duration: 3000
+        },
+        error: {
+          duration: 5000
+        },
+        style: {
+          fontSize: '14px',
+          maxWidth: '500px',
+          padding: '16px 24px',
+          backgroundColor: '--var(--color-grey-0)',
+          color: '--var(--color-grey-700)'
+        }
+      }} />
       </div>
   )
 }

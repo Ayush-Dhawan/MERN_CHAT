@@ -1,24 +1,17 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import useLogin from '../hooks/useLogin';
 
 export default function Login() {
     const [username, setUsername] = useState<String>("");
     const [password, setPassword] = useState<String>("");
 
-    function handleSubmit(){
-        const credentials = {"username": username, "password": password}
-        console.log(credentials)
+    const {login} = useLogin();
 
-        axios.post('http://localhost:8000/api/auth/login', credentials)
-        .then(response => {
-          // Handle successful login response
-          console.log('Login successful:', response.data);
-        })
-        .catch(error => {
-          // Handle error
-          console.error('Error:', error);
-        });
+    async function handleSubmit(e: any){
+        e.preventDefault();
+        await login({username, password})
     }
   return (
     <div className='flex items-center justify-between flex-col md:flex-row'>

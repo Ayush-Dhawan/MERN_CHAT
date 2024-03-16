@@ -9,20 +9,25 @@ export default function MessageContainer() {
     return (
         <>
             {!noChat ? (
-                <div className=''>
-                    <div className='bg-slate-200 px-4 py-2 mb-2 flex items-center justify-end'>
-                        <div className="avatar">
-                            <div className="w-10 rounded-full ">
-                                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar" />
+
+                    <div className='flex flex-col h-full'>
+                            <div className='reduce-this h-[50%]'>
+                                <div className='bg-slate-200 px-4 py-2 mb-2 flex items-center justify-end'>
+                                    <div className="avatar">
+                                        <div className="w-10 rounded-full ">
+                                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar" />
+                                        </div>
+                                    </div>
+                                    <span className='text-gray-900 font-bold ml-5'>UserName</span>
+                                </div>
+
+                            {/* messages */}
+                            <Messages />
+
                             </div>
-                        </div>
-                        <span className='text-gray-900 font-bold ml-5'>UserName</span>
+                    <MessageInput />
                     </div>
 
-                    {/* messages */}
-                    <Messages />
-                    <MessageInput />
-                </div>
             ) : (
                 <div className='px-4 py-2 mb-2 flex items-center justify-end'>
                     <NoChatSelected />
@@ -84,7 +89,7 @@ function MessageStart(){
 
 function MessageInput(){
     return(
-        <form className={`px-4 my-3 w-[54.5%] absolute top-[81vh]`}>
+        <form className={`px-4 my-3 w-[54.5%] bottom-6 fixed`}>
             <div className='w-full flex '>
                 <input type='text' placeholder='Send a message..' className='border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 text-white' />
                 <button type='submit' className='absolute right-6 bottom-2 text-white'>

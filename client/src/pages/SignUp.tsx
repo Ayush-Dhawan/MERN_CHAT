@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { NavLink } from 'react-router-dom';
+import useSignUp from '../hooks/useSignUp';
 
 export default function SignUp() {
     const [username, setUsername] = useState<String>("");
@@ -9,20 +10,13 @@ export default function SignUp() {
     const [confirmPassword, setConfirmPassword] = useState<String>("");
     const [gender, setGender] = useState<String>("");
 
-    function handleSubmit(e: any){
-        e.preventDefault();
-        const credentials = {"username": username, "password": password}
-        console.log(gender)
+    const { signUp } = useSignUp();
 
-        axios.post('http://localhost:8000/api/auth/login', credentials)
-        .then(response => {
-          // Handle successful login response
-          console.log('Login successful:', response.data);
-        })
-        .catch(error => {
-          // Handle error
-          console.error('Error:', error);
-        });
+   async function handleSubmit(e: any){
+        e.preventDefault();
+        console.log(password, confirmPassword)
+        
+        await signUp({fullName, username, password, confirmPassword, gender})
     }
   return (
     <div className='flex items-center justify-between flex-col md:flex-row'>
