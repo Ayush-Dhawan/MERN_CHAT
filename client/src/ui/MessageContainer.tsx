@@ -1,24 +1,25 @@
 import React, { useState } from 'react'
 import { BsSend } from 'react-icons/bs'
 import Spline from '@splinetool/react-spline';
+import useConversation from '../zustand/useConversation';
 
 
 export default function MessageContainer() {
-    const [noChat, setNoChat] = useState<Boolean>(false);
+    const { selectedConversation, setSelectedConversation } = useConversation();
     
     return (
         <>
-            {!noChat ? (
+            {selectedConversation ? (
 
                     <div className='flex flex-col h-full'>
                             <div className='reduce-this h-[50%]'>
                                 <div className='bg-slate-200 px-4 py-2 mb-2 flex items-center justify-end'>
                                     <div className="avatar">
                                         <div className="w-10 rounded-full ">
-                                            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Avatar" />
+                                            <img src={selectedConversation.profilePic} alt="Avatar" />
                                         </div>
                                     </div>
-                                    <span className='text-gray-900 font-bold ml-5'>UserName</span>
+                                    <span className='text-gray-900 font-bold ml-5'>{selectedConversation.username}</span>
                                 </div>
 
                             {/* messages */}

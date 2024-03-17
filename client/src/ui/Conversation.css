@@ -2,7 +2,8 @@
     transition: all 0.2s ease-in-out;
 
     &:hover{
-        background-color: rgb(122, 250, 173);
+        background-color: #2D3748;
+        color: white;
         cursor: pointer;
     }
 }

@@ -1,17 +1,22 @@
 import React from 'react'
 import './Conversation.css'
+import useConversation from '../zustand/useConversation'
 
-export default function Conversation() {
+export default function Conversation({username, image, conversation} : {username: String, image: any, conversation: any}) {
+  const { selectedConversation, setSelectedConversation } = useConversation();
+
+	const isSelected = selectedConversation?._id === conversation._id;
+  console.log(selectedConversation, conversation, isSelected)
   return (
-    <div className='w-full h-16 flex items-center justify-start p-2 m-2 rounded-lg convo'>
+    <div onClick={() => setSelectedConversation(conversation)} className={`w-full h-16 flex items-center justify-start p-2 m-2 rounded-lg convo border-l-4 ${isSelected && 'bg-gray-800 border-l-green-400 border-l-4 text-gray-100'}`}>
         <div className="avatar online">
             <div className="w-12 rounded-full">
-                <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src={image} alt='pfp' />
             </div>
         </div>
 
         <div className='ml-4'>
-            <span>Username</span>
+            <span>{username}</span>
         </div>
     </div>
   )

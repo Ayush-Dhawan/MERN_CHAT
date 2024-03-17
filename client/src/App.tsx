@@ -20,7 +20,7 @@ function App() {
   console.log(authUser, "from home");
 
   return (
-    <div data-theme="light" className='flex justify-center items-center p-4 h-screen w-screen'>     
+    <div data-theme="light" className='flex justify-center items-center h-screen w-screen'>     
           <BrowserRouter>
       <AuthContextProvider>
             <Routes>

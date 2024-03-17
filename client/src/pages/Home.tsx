@@ -9,9 +9,11 @@ import './Home.css'
 import Conversation from '../ui/Conversation';
 import MessageContainer from '../ui/MessageContainer';
 import useLogout from '../hooks/useLogout';
+import useGetConversations from '../hooks/useGetConversations';
 
 export default function Home() {
   const [hideSideBar, setHideSideBar] = useState<Boolean>(true);
+  const [search, setSearch] = useState<string>("");
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,30 +45,36 @@ export default function Home() {
         </div>
       </div>
        <div className={`h-[78%] z-30 w-[30vw] absolute top-[11vh] left-[10.5%] sideBar ${hideSideBar && "hidden"}`}>
-          <ChatList />
+          <ChatList search={search} setSearch={setSearch} />
         </div>
     </div>
   )
 }
 
-function ChatList(){
+function ChatList({search, setSearch} : {search: string, setSearch: any}){
 
   return(
     <div className='w-full h-full p-4 flex flex-col items-center border-r-2 border-slate-400 bg-gray-200'>
       <div className='searchField w-full flex gap-4 items-center justify-center border-b-2 border-slate-400 p-2'>
-          <input type="text" placeholder="Search Users.." className="input input-bordered input-success w-full max-w-xs" />
+          <input type="text" placeholder="Search Users.." className="input input-bordered input-success w-full max-w-xs" onChange={(e) => setSearch(e.target.value)} />
           <IoPersonAdd size={'1.7rem'} />
       </div>
-      <Conversations />
+      <Conversations search={search} setSearch={setSearch} />
     </div>
   )
 }
 
-function Conversations(){
+function Conversations({search, setSearch} : {search: string, setSearch: any}){
+  const {loading, conversations} = useGetConversations();
+  console.log(conversations)
+  let filteredConversations;
+  if(search !== "") filteredConversations = conversations?.filter((convo : any) => convo?.username.toLowerCase().includes(search.toLowerCase()))
+  else filteredConversations = conversations;
+  console.log("filtered: ", filteredConversations)
+  if(loading) return <span className="loading loading-dots loading-lg"></span>
   return(
     <div className='w-full p-4'>
-      <Conversation />
-      <Conversation />
+      {filteredConversations?.map((convo: any, index: number )=> <Conversation key={index} username={convo.username} image={convo.profilePic} conversation={convo} />)}
     </div>
   )
 }
