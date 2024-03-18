@@ -6,6 +6,7 @@ import useDeliverMessage from '../hooks/useDeliverMessage'
 import useGetMessages from '../hooks/useGetMessages';
 import MessageSkeleton from './MessageSkeleton';
 import { useAuthContext } from '../contexts/AuthContext';
+import useListenMessages from '../hooks/useListenMessages';
 
 
 export default function MessageContainer() {
@@ -45,8 +46,9 @@ export default function MessageContainer() {
 
 function Messages(){
     const {loading, messages} = useGetMessages();
+    useListenMessages();
     // const {messages} = useConversation();
-    console.log("messages", messages)
+    // console.log("messages", messages)
 
     const lastMessageRef = useRef<any>();
     useEffect(() =>{
@@ -104,7 +106,7 @@ function MessageEnd({message}: {message: any}){
         <div className={`chat chat-end`}>
                 <div className='chat-image avatar'>
                     <div className='w-10 rounded-full'>
-                        <img alt='Chat bubble' src={authUser.profilePic} />
+                        <img alt='Chat bubble' src={authUser?.profilePic} />
                     </div>
                 </div>
                 <div className={`chat-bubble text-gray-600`} style={{ backgroundColor: '#7AFAAD' }}>{message?.message}</div>

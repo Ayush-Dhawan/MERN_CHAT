@@ -6,7 +6,9 @@ import userRoutes from './routes/user.routes.js'
 import dbconnect from "./db/dbconnect.js";
 import cookieParser from "cookie-parser";
 
-const app = express();
+import { app, server } from "./socket/socket.js";
+
+
 app.use(express.json()); 
 config();
 
@@ -24,7 +26,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/messages', messageRoutes)
 app.use('/api/users', userRoutes)
 
-app.listen(PORT, () =>{ 
+server.listen(PORT, () =>{ 
     dbconnect();
     console.log(`server is running on port ${PORT}`)
 })

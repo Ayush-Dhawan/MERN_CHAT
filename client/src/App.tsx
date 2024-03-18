@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import { AuthContextProvider, useAuthContext } from './contexts/AuthContext'
 import { useEffect, useState } from 'react'
 import Landing from './pages/Landing'
+import { SocketContextProvider } from './contexts/SocketContext'
 
 function App() {
  const [authUser, setAuthUser] = useState<any>(null);
@@ -23,12 +24,14 @@ function App() {
     <div data-theme="light" className='flex justify-center items-center h-screen w-screen'>     
           <BrowserRouter>
       <AuthContextProvider>
-            <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/home"  element={authUser  ? <Home /> : <Navigate to="/login" />} />
-              <Route path="/login" element={authUser   ? <Navigate to="/home" /> : <Login />} />
-              <Route path="/signUp" element={authUser  ? <Navigate to="/home" /> : <SignUp />} />
-            </Routes>
+            <SocketContextProvider>
+                <Routes>
+                <Route path="/" element={<Landing />} />
+                <Route path="/home"  element={authUser  ? <Home /> : <Navigate to="/login" />} />
+                  <Route path="/login" element={authUser   ? <Navigate to="/home" /> : <Login />} />
+                  <Route path="/signUp" element={authUser  ? <Navigate to="/home" /> : <SignUp />} />
+                </Routes>
+            </SocketContextProvider>
             </AuthContextProvider>
           </BrowserRouter>
           <Toaster position="top-center" gutter = {10} containerStyle={{ margin: "5px"}} toastOptions = {{

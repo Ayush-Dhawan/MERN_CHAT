@@ -2,6 +2,7 @@ import express from 'express';
 import protectRoutev3 from '../middleware/protectRoutesv3.js';
 import Conversation from '../models/conversation.model.js';
 import Message from '../models/message.model.js';
+import { getReceiverSocketID, io } from '../socket/socket.js';
 
 
 const router = express.Router();
@@ -35,14 +36,17 @@ async function sendMessage(req, res){
             conversation.messages.push(newMessage._id);
         }
 
-        //insert sockets
-
         // await conversation.save(); //add them to the db
         // await newMessage.save();
 
         //faster as runs both saves in parallel
         await Promise.all([conversation.save(), newMessage.save()]);
 
+        //insert sockets
+        const receiverSocketID = getReceiverSocketID(receiverID);
+        if(receiverSocketID){
+            io.to(receiverSocketID).emit("newMessage", newMessage);
+        }
         res.status(201).json(newMessage)
         
     } catch (error) {
