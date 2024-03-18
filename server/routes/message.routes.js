@@ -43,7 +43,7 @@ async function sendMessage(req, res){
         //faster as runs both saves in parallel
         await Promise.all([conversation.save(), newMessage.save()]);
 
-        res.status(201).json({message: "new message created"})
+        res.status(201).json(newMessage)
         
     } catch (error) {
         res.status(500).json({error: "interna server error"})

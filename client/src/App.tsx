@@ -10,14 +10,14 @@ import { useEffect, useState } from 'react'
 import Landing from './pages/Landing'
 
 function App() {
-  const [authUser, setAuthUser] = useState<any>(null);
+ const [authUser, setAuthUser] = useState<any>(null);
 
   useEffect(() => {
     const storedAuthUser = localStorage.getItem("chat-user");
     setAuthUser(storedAuthUser);
   }, []); // Empty dependency array, runs once on mount
 
-  console.log(authUser, "from home");
+  console.log(authUser, "from home"); 
 
   return (
     <div data-theme="light" className='flex justify-center items-center h-screen w-screen'>     

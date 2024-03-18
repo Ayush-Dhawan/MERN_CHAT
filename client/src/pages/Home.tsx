@@ -66,14 +66,14 @@ function ChatList({search, setSearch} : {search: string, setSearch: any}){
 
 function Conversations({search, setSearch} : {search: string, setSearch: any}){
   const {loading, conversations} = useGetConversations();
-  console.log(conversations)
+  // console.log(conversations)
   let filteredConversations;
   if(search !== "") filteredConversations = conversations?.filter((convo : any) => convo?.username.toLowerCase().includes(search.toLowerCase()))
   else filteredConversations = conversations;
-  console.log("filtered: ", filteredConversations)
+  // console.log("filtered: ", filteredConversations)
   if(loading) return <span className="loading loading-dots loading-lg"></span>
   return(
-    <div className='w-full p-4'>
+    <div className='w-full p-4 overflow-y-auto overflow-x-hidden'>
       {filteredConversations?.map((convo: any, index: number )=> <Conversation key={index} username={convo.username} image={convo.profilePic} conversation={convo} />)}
     </div>
   )
